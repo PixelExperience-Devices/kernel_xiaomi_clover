@@ -23,8 +23,6 @@
 #include "mdss_mdp_pp.h"
 #include "mdss_livedisplay.h"
 
-int inchargeonly = 0;
-
 /*
  * LiveDisplay is the display management service in CyanogenMod. It uses
  * various capabilities of the hardware and software in order to
@@ -490,20 +488,6 @@ static ssize_t mdss_livedisplay_get_num_presets(struct device *dev,
 	return sprintf(buf, "%d\n", mlc->num_presets);
 }
 
-static ssize_t mdss_livedisplay_get_inchargeonly(struct device *dev,
-		struct device_attribute *attr, char *buf)
-{
-	return sprintf(buf, "%d\n", inchargeonly);
-}
-
-static ssize_t mdss_livedisplay_set_inchargeonly(struct device *dev,
-							   struct device_attribute *attr,
-							   const char *buf, size_t count)
-{
-	sscanf(buf, "%du", &inchargeonly);
-	return count;
-}
-
 static DEVICE_ATTR(cabc, S_IRUGO | S_IWUSR | S_IWGRP, mdss_livedisplay_get_cabc, mdss_livedisplay_set_cabc);
 static DEVICE_ATTR(sre, S_IRUGO | S_IWUSR | S_IWGRP, mdss_livedisplay_get_sre, mdss_livedisplay_set_sre);
 static DEVICE_ATTR(color_enhance, S_IRUGO | S_IWUSR | S_IWGRP, mdss_livedisplay_get_color_enhance, mdss_livedisplay_set_color_enhance);
@@ -511,7 +495,6 @@ static DEVICE_ATTR(aco, S_IRUGO | S_IWUSR | S_IWGRP, mdss_livedisplay_get_aco, m
 static DEVICE_ATTR(preset, S_IRUGO | S_IWUSR | S_IWGRP, mdss_livedisplay_get_preset, mdss_livedisplay_set_preset);
 static DEVICE_ATTR(num_presets, S_IRUGO, mdss_livedisplay_get_num_presets, NULL);
 static DEVICE_ATTR(hbm, S_IRUGO | S_IWUSR | S_IWGRP, mdss_livedisplay_get_hbm, mdss_livedisplay_set_hbm);
-static DEVICE_ATTR(inchargeonly, S_IRUGO | S_IWUSR | S_IWGRP, mdss_livedisplay_get_inchargeonly, mdss_livedisplay_set_inchargeonly);
 
 int mdss_livedisplay_parse_dt(struct device_node *np, struct mdss_panel_info *pinfo)
 {
@@ -616,10 +599,6 @@ int mdss_livedisplay_create_sysfs(struct msm_fb_data_type *mfd)
 {
 	int rc = 0;
 	struct mdss_livedisplay_ctx *mlc = get_ctx(mfd);
-
-	rc = sysfs_create_file(&mfd->fbi->dev->kobj, &dev_attr_inchargeonly.attr);
-		if (rc)
-			goto sysfs_err;
 
 	if (mlc == NULL)
 		return 0;
