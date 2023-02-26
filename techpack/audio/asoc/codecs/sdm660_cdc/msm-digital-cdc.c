@@ -89,8 +89,8 @@ static int msm_digcdc_clock_control(bool flag)
 						AFE_PORT_ID_INT0_MI2S_RX,
 						&pdata->digital_cdc_core_clk);
 			if (ret < 0) {
-				// pr_err("%s:failed to enable the MCLK\n",
-				//        __func__);
+				pr_err("%s:failed to enable the MCLK\n",
+				       __func__);
 				/*
 				 * Avoid access to lpass register
 				 * as clock enable failed during SSR/PDR.
