@@ -307,7 +307,7 @@
 				  parts = "vbmeta,boot,system,vendor,dtbo";
 			};
 
-			/*fstab {
+			fstab {
 				compatible = "android,fstab";
 				vendor {
 					compatible = "android,vendor";
@@ -317,7 +317,7 @@
 					fsmgr_flags = "wait,slotselect,avb";
 					status = "ok";
 				};
-			};*/
+			};
 		};
 	};
 
