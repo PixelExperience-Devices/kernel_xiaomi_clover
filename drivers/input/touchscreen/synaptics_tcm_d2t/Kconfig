@@ -12,16 +12,17 @@ menuconfig TOUCHSCREEN_SYNAPTICS_TCM
 
 if TOUCHSCREEN_SYNAPTICS_TCM
 
-choice
-	default TOUCHSCREEN_SYNAPTICS_TCM_I2C
-	prompt "Synaptics TCM bus module"
 config TOUCHSCREEN_SYNAPTICS_TCM_I2C
 	bool "I2C"
 	depends on I2C
+	help
+	  Synaptics TCM bus module
+
 config TOUCHSCREEN_SYNAPTICS_TCM_SPI
 	bool "SPI"
 	depends on SPI_MASTER
-endchoice
+	help
+	  Synaptics TCM bus module
 
 config TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	tristate "Synaptics TCM core module"
