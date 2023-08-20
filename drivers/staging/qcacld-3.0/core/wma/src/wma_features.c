@@ -1675,39 +1675,39 @@ static void wma_inc_wow_stats(t_wma_handle *wma,
 
 static void wma_wow_stats_display(struct wake_lock_stats *stats)
 {
-	WMA_LOGD("WLAN wake reason counters:");
-	WMA_LOGD("uc:%d bc:%d v4_mc:%d v6_mc:%d ra:%d ns:%d na:%d "
-		 "icmp:%d icmpv6:%d",
-		 stats->ucast_wake_up_count,
-		 stats->bcast_wake_up_count,
-		 stats->ipv4_mcast_wake_up_count,
-		 stats->ipv6_mcast_wake_up_count,
-		 stats->ipv6_mcast_ra_stats,
-		 stats->ipv6_mcast_ns_stats,
-		 stats->ipv6_mcast_na_stats,
-		 stats->icmpv4_count,
-		 stats->icmpv6_count);
+	wma_nofl_debug("WLAN wake reason counters:");
+	wma_nofl_debug("uc:%d bc:%d v4_mc:%d v6_mc:%d ra:%d ns:%d na:%d "
+		      "icmp:%d icmpv6:%d",
+		      stats->ucast_wake_up_count,
+		      stats->bcast_wake_up_count,
+		      stats->ipv4_mcast_wake_up_count,
+		      stats->ipv6_mcast_wake_up_count,
+		      stats->ipv6_mcast_ra_stats,
+		      stats->ipv6_mcast_ns_stats,
+		      stats->ipv6_mcast_na_stats,
+		      stats->icmpv4_count,
+		      stats->icmpv6_count);
 
-	WMA_LOGD("assoc:%d disassoc:%d assoc_resp:%d reassoc:%d "
-		 "reassoc_resp:%d auth:%d deauth:%d action:%d",
-		 stats->mgmt_assoc,
-		 stats->mgmt_disassoc,
-		 stats->mgmt_assoc_resp,
-		 stats->mgmt_reassoc,
-		 stats->mgmt_reassoc_resp,
-		 stats->mgmt_auth,
-		 stats->mgmt_deauth,
-		 stats->mgmt_action);
+	wma_nofl_debug("assoc:%d disassoc:%d assoc_resp:%d reassoc:%d "
+		      "reassoc_resp:%d auth:%d deauth:%d action:%d",
+		      stats->mgmt_assoc,
+		      stats->mgmt_disassoc,
+		      stats->mgmt_assoc_resp,
+		      stats->mgmt_reassoc,
+		      stats->mgmt_reassoc_resp,
+		      stats->mgmt_auth,
+		      stats->mgmt_deauth,
+		      stats->mgmt_action);
 
-	WMA_LOGD("pno_match:%d pno_complete:%d gscan:%d "
-		 "low_rssi:%d rssi_breach:%d oem:%d scan_11d:%d",
-		 stats->pno_match_wake_up_count,
-		 stats->pno_complete_wake_up_count,
-		 stats->gscan_wake_up_count,
-		 stats->low_rssi_wake_up_count,
-		 stats->rssi_breach_wake_up_count,
-		 stats->oem_response_wake_up_count,
-		 stats->scan_11d);
+	wma_nofl_debug("pno_match:%d pno_complete:%d gscan:%d "
+		      "low_rssi:%d rssi_breach:%d oem:%d scan_11d:%d",
+		      stats->pno_match_wake_up_count,
+		      stats->pno_complete_wake_up_count,
+		      stats->gscan_wake_up_count,
+		      stats->low_rssi_wake_up_count,
+		      stats->rssi_breach_wake_up_count,
+		      stats->oem_response_wake_up_count,
+		      stats->scan_11d);
 }
 
 static void wma_print_wow_stats(t_wma_handle *wma,
@@ -2520,13 +2520,13 @@ static void wma_wow_dump_mgmt_buffer(uint8_t *wow_packet_buffer,
 		uint8_t to_from_ds, frag_num;
 		uint32_t seq_num;
 
-		wma_err("RA: " QDF_MAC_ADDR_STR " TA: " QDF_MAC_ADDR_STR,
-			QDF_MAC_ADDR_ARRAY(wh->i_addr1),
-			QDF_MAC_ADDR_ARRAY(wh->i_addr2));
+		wma_nofl_info("RA: " QDF_MAC_ADDR_STR " TA: " QDF_MAC_ADDR_STR,
+			      QDF_MAC_ADDR_ARRAY(wh->i_addr1),
+			      QDF_MAC_ADDR_ARRAY(wh->i_addr2));
 
-		WMA_LOGE("TO_DS: %u, FROM_DS: %u",
-			wh->i_fc[1] & IEEE80211_FC1_DIR_TODS,
-			wh->i_fc[1] & IEEE80211_FC1_DIR_FROMDS);
+		wma_nofl_info("TO_DS: %u, FROM_DS: %u",
+			      wh->i_fc[1] & IEEE80211_FC1_DIR_TODS,
+			      wh->i_fc[1] & IEEE80211_FC1_DIR_FROMDS);
 
 		to_from_ds = wh->i_fc[1] & IEEE80211_FC1_DIR_MASK;
 
@@ -2536,19 +2536,19 @@ static void wma_wow_dump_mgmt_buffer(uint8_t *wow_packet_buffer,
 				QDF_MAC_ADDR_ARRAY(wh->i_addr3));
 			break;
 		case IEEE80211_FC1_DIR_TODS:
-			wma_err("DA: " QDF_MAC_ADDR_STR,
-				QDF_MAC_ADDR_ARRAY(wh->i_addr3));
+			wma_nofl_info("DA: " QDF_MAC_ADDR_STR,
+				      QDF_MAC_ADDR_ARRAY(wh->i_addr3));
 			break;
 		case IEEE80211_FC1_DIR_FROMDS:
-			wma_err("SA: " QDF_MAC_ADDR_STR,
-				QDF_MAC_ADDR_ARRAY(wh->i_addr3));
+			wma_nofl_info("SA: " QDF_MAC_ADDR_STR,
+				      QDF_MAC_ADDR_ARRAY(wh->i_addr3));
 			break;
 		case IEEE80211_FC1_DIR_DSTODS:
 			if (buf_len >= sizeof(struct ieee80211_frame_addr4))
-				wma_err("DA: " QDF_MAC_ADDR_STR " SA: "
-					QDF_MAC_ADDR_STR,
-					QDF_MAC_ADDR_ARRAY(wh->i_addr3),
-					QDF_MAC_ADDR_ARRAY(wh->i_addr4));
+				wma_nofl_info("DA: " QDF_MAC_ADDR_STR " SA: "
+					      QDF_MAC_ADDR_STR,
+					      QDF_MAC_ADDR_ARRAY(wh->i_addr3),
+					      QDF_MAC_ADDR_ARRAY(wh->i_addr4));
 			break;
 		}
 
@@ -2559,8 +2559,8 @@ static void wma_wow_dump_mgmt_buffer(uint8_t *wow_packet_buffer,
 				IEEE80211_SEQ_FRAG_MASK) >>
 				IEEE80211_SEQ_FRAG_SHIFT);
 
-		WMA_LOGE("SEQ_NUM: %u, FRAG_NUM: %u",
-				seq_num, frag_num);
+		wma_nofl_info("SEQ_NUM: %u, FRAG_NUM: %u",
+			      seq_num, frag_num);
 	} else {
 		WMA_LOGE("Insufficient buffer length for mgmt. packet");
 	}
@@ -2968,13 +2968,13 @@ static void wma_wake_event_log_reason(t_wma_handle *wma,
 	/* "Unspecified" means APPS triggered wake, else firmware triggered */
 	if (wake_info->wake_reason != WOW_REASON_UNSPECIFIED) {
 		vdev = &wma->interfaces[wake_info->vdev_id];
-		WMA_LOGD("WLAN triggered wakeup: %s (%d), vdev: %d (%s)",
+		wma_nofl_debug("WLAN triggered wakeup: %s (%d), vdev: %d (%s)",
 			 wma_wow_wake_reason_str(wake_info->wake_reason),
 			 wake_info->wake_reason,
 			 wake_info->vdev_id,
 			 wma_vdev_type_str(vdev->type));
 	} else if (!wmi_get_runtime_pm_inprogress(wma->wmi_handle)) {
-		WMA_LOGD("Non-WLAN triggered wakeup: %s (%d)",
+		wma_nofl_debug("Non-WLAN triggered wakeup: %s (%d)",
 			 wma_wow_wake_reason_str(wake_info->wake_reason),
 			 wake_info->wake_reason);
 	}
@@ -3087,7 +3087,7 @@ int wma_pdev_resume_event_handler(void *handle, uint8_t *event, uint32_t len)
 {
 	tp_wma_handle wma = (tp_wma_handle) handle;
 
-	WMA_LOGA("Received PDEV resume event");
+	wma_nofl_info("Received PDEV resume event");
 
 	ucfg_pmo_psoc_wakeup_host_event_received(wma->psoc);
 
